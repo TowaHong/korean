@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韓文發音1： 基本母音、子音單字練習</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* 기본 폰트로 변경 */
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.1em; /* 기존 3em에서 70%로 줄임 */
+            margin: 0; /* 기본 마진 제거 */
+        }
+        h1 span {
+            display: block; /* 줄바꿈을 위한 블록 요소로 변경 */
+        }
+        button {
+            font-size: 3.6em;
+            padding: 30px 60px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 6em;
+            background-color: yellow;
+            color: black;
+            margin-top: 20px;
+            padding: 20px;
+            display: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold; /* 결과값 폰트에 볼드 적용 */
+            font-family: 'Nanum Gothic', sans-serif; /* 결과값만 나눔고딕 적용 */
+        }
+        #instruction, #result-instruction {
+            font-size: 1.2em;
+        }
+        .spacer {
+            height: 20px; /* 한 줄 띄우기 위한 높이 */
+        }
+        .double-spacer {
+            height: 40px; /* 두 줄 띄우기 위한 높이 */
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <span>[韓文發音1]</span>
+        <span>基本母音、子音</span>
+        <span>單字發音練習</span>
+    </h1>
+
+    <div class="spacer"></div> <!-- 제목 아래 한 줄 띄우기 -->
+
+    <button id="generate">造字</button>
+    <div id="instruction" style="display: none;">(👆點擊「造字」可再造字)</div>
+
+    <div id="result"></div>
+    <div id="result-instruction" style="display: none;">(👆點擊韓文字母即可聽到發音)</div>
+
+    <div class="double-spacer"></div> <!-- 두 줄 띄우기 -->
+
+    <div style="font-size: 2.1em;">🇰🇷東禾韓語中心🇰🇷</div>
+
+    <script>
+        const words = [
+            '아이', '아우', '아야', '어이', '이어', '여우', '여유', '오이', '우유', '유아', '이야', '이유',
+            '아기', '고기', '나', '너', '거미', '모기', '나무', '가수', '소', '오', '어머니', '야구', '이야기',
+            '요가', '교수', '고요', '가구', '나이', '아니', '누나', '누구', '이마', '마셔요', '무', '사이',
+            '소나무', '사요', '아니요', '아이고', '아내'
+        ];
+
+        function generateWord() {
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            document.getElementById('result').textContent = randomWord;
+            document.getElementById('result').style.display = 'inline-block';
+            document.getElementById('instruction').style.display = 'block';
+            document.getElementById('result-instruction').style.display = 'block';
+        }
+
+        document.getElementById('generate').addEventListener('click', generateWord);
+
+        document.getElementById('result').addEventListener('click', function() {
+            const word = this.textContent;
+            responsiveVoice.speak(word, "Korean Female", {rate: 0.7}); // 한국어 여성 목소리로 전체 단어 발음
+        });
+    </script>
+</body>
+</html>
