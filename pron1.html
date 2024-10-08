@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif; /* 기본 폰트로 변경 */
@@ -49,6 +50,12 @@
         .double-spacer {
             height: 40px; /* 두 줄 띄우기 위한 높이 */
         }
+        /* 이미지 크기를 "造字" 버튼과 동일하게 설정 */
+        .logo {
+            width: auto;
+            height: 3.6em; /* 버튼의 폰트 크기와 동일하게 설정 */
+            padding: 30px 60px;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +75,8 @@
 
     <div class="double-spacer"></div> <!-- 두 줄 띄우기 -->
 
-    <div style="font-size: 2.1em;">🇰🇷東禾韓語中心🇰🇷</div>
+    <!-- 로고 이미지 추가 -->
+    <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
 
     <script>
         const words = [
@@ -86,18 +94,14 @@
             document.getElementById('result-instruction').style.display = 'block';
         }
 
-        function speakWord(word) {
-            const utterance = new SpeechSynthesisUtterance(word);
-            utterance.lang = 'ko-KR';
-            utterance.rate = 0.7; // 발음 속도 조절
-            speechSynthesis.speak(utterance);
-        }
-
         document.getElementById('generate').addEventListener('click', generateWord);
 
         document.getElementById('result').addEventListener('click', function() {
             const word = this.textContent;
-            speakWord(word); // 한국어 단어 발음
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.7; // 발음 속도 조절
+            window.speechSynthesis.speak(utterance);
         });
     </script>
 </body>
