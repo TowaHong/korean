@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif; /* 기본 폰트로 변경 */
@@ -87,11 +86,18 @@
             document.getElementById('result-instruction').style.display = 'block';
         }
 
+        function speakWord(word) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.7; // 발음 속도 조절
+            speechSynthesis.speak(utterance);
+        }
+
         document.getElementById('generate').addEventListener('click', generateWord);
 
         document.getElementById('result').addEventListener('click', function() {
             const word = this.textContent;
-            responsiveVoice.speak(word, "Korean Female", {rate: 0.7}); // 한국어 여성 목소리로 전체 단어 발음
+            speakWord(word); // 한국어 단어 발음
         });
     </script>
 </body>
