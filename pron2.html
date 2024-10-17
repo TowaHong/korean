@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>韓文發音1： 基本母音、子音單字練習</title>
+    <title>韓文發音2：其他母音、基本子音單字練習</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif; /* 기본 폰트로 변경 */
+            font-family: Arial, sans-serif;
             text-align: center;
         }
         h1 {
-            font-size: 2.1em; /* 기존 3em에서 70%로 줄임 */
-            margin: 0; /* 기본 마진 제거 */
+            font-size: 2.1em;
+            margin: 0;
         }
         h1 span {
-            display: block; /* 줄바꿈을 위한 블록 요소로 변경 */
+            display: block;
         }
         button {
             font-size: 3.6em;
@@ -38,36 +37,35 @@
             display: none;
             cursor: pointer;
             border-radius: 5px;
-            font-weight: bold; /* 결과값 폰트에 볼드 적용 */
-            font-family: 'Nanum Gothic', sans-serif; /* 결과값만 나눔고딕 적용 */
+            font-weight: bold;
+            font-family: 'Nanum Gothic', sans-serif;
         }
         #instruction, #result-instruction {
             font-size: 1.2em;
         }
         .spacer {
-            height: 20px; /* 한 줄 띄우기 위한 높이 */
+            height: 20px;
         }
         .double-spacer {
-            height: 40px; /* 두 줄 띄우기 위한 높이 */
+            height: 40px;
         }
-        /* 이미지 크기를 70%로 줄이고 중앙 정렬 설정 */
         .logo {
             width: auto;
-            height: 2.52em; /* 버튼의 폰트 크기의 70%로 설정 (3.6em * 0.7) */
+            height: 2.52em;
             padding: 30px 60px;
-            display: block; /* 중앙 정렬을 위한 블록 요소로 변경 */
-            margin: 0 auto; /* 양쪽 여백을 자동으로 설정하여 중앙 정렬 */
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <h1>
-        <span>[韓文發音1]</span>
-        <span>基本母音、子音</span>
+        <span>[韓文發音2]</span>
+        <span>其他母音、基本子音</span>
         <span>單字發音練習</span>
     </h1>
 
-    <div class="spacer"></div> <!-- 제목 아래 한 줄 띄우기 -->
+    <div class="spacer"></div>
 
     <button id="generate">造字</button>
     <div id="instruction" style="display: none;">(👆點擊「造字」可再造字)</div>
@@ -75,17 +73,17 @@
     <div id="result"></div>
     <div id="result-instruction" style="display: none;">(👆點擊韓文字母即可聽到發音)</div>
 
-    <div class="double-spacer"></div> <!-- 두 줄 띄우기 -->
+    <div class="double-spacer"></div>
 
-    <!-- 로고 이미지 추가 -->
+    <!-- 로고 이미지 -->
     <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
 
     <script>
         const words = [
-            '아이', '아우', '아야', '어이', '이어', '여우', '여유', '오이', '우유', '유아', '이야', '이유',
-            '아기', '고기', '나', '너', '거미', '모기', '나무', '가수', '소', '오', '어머니', '야구', '이야기',
-            '요가', '교수', '고요', '가구', '나이', '아니', '누나', '누구', '이마', '마셔요', '무', '사이',
-            '소나무', '사요', '아니요', '아이고', '어느'
+            '애', '얘', '예', '와', '우와', '위', '왜', '의사', '거위', '개미', '가게', '가위', '네모', '메뉴', '아내', '사과', '새우', '시계', '샤워', '예요',
+            '도구', '더워요', '다리', '라디오', '바다', '배', '과자', '돼지', '구두', '나라', '머리', '바나나', '바지', '지도', '모자', '아버지', '야자수', 
+            '여자', '벼', '요리', '유리', '새', '게', '세수', '그네', '얘기', '서예', '뭐', '줘요', '쇠고기', '외우다', '두뇌', '귀', '쉬다', '쥐', 
+            '의자', '여의도', '예의', '가지', '비누', '귀여워', '외교', '외모'
         ];
 
         function generateWord() {
@@ -102,7 +100,7 @@
             const word = this.textContent;
             const utterance = new SpeechSynthesisUtterance(word);
             utterance.lang = 'ko-KR';
-            utterance.rate = 0.7; // 발음 속도 조절
+            utterance.rate = 0.7;
             window.speechSynthesis.speak(utterance);
         });
     </script>
