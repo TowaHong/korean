@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韓文發音3：其他子音單字練習</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.1em;
+            margin: 0;
+        }
+        h1 span {
+            display: block;
+        }
+        button {
+            font-size: 3.6em;
+            padding: 30px 60px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 6em;
+            background-color: yellow;
+            color: black;
+            margin-top: 20px;
+            padding: 20px;
+            display: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        #instruction, #result-instruction {
+            font-size: 1.2em;
+        }
+        .spacer {
+            height: 20px;
+        }
+        .double-spacer {
+            height: 40px;
+        }
+        .logo {
+            width: auto;
+            height: 2.52em;
+            padding: 30px 60px;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <span>[韓文發音3]</span>
+        <span>其他子音</span>
+        <span>單字發音練習</span>
+    </h1>
+
+    <div class="spacer"></div>
+
+    <button id="generate">造字</button>
+    <div id="instruction" style="display: none;">(👆點擊「造字」可再造字)</div>
+
+    <div id="result"></div>
+    <div id="result-instruction" style="display: none;">(👆點擊韓文字母即可聽到發音)</div>
+
+    <div class="double-spacer"></div>
+
+    <!-- 로고 이미지 -->
+    <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
+
+    <script>
+        const words = [
+            '카드', '코', '키', '타조', '포도', '우표', '차', '치마', '고추', '커피', '코코아', '코트', '쿠키', '기차표', 
+            '까치', '꼬리', '코끼리', '따다', '뜨다', '머리띠', '뿌리', '뼈', '아빠', '싸다', '쓰다', '아저씨', '짜다', '찌다', 
+            '가짜', '카메라', '예쁘다', '와이셔츠', '추워요', '웨이터', '스웨터', '토마토', '취미', '의회', '허리', '지하', 
+            '혀', '휴지', '해', '화가', '회사', '회의', '투우사', '파리'
+        ];
+
+        function generateWord() {
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            document.getElementById('result').textContent = randomWord;
+            document.getElementById('result').style.display = 'inline-block';
+            document.getElementById('instruction').style.display = 'block';
+            document.getElementById('result-instruction').style.display = 'block';
+        }
+
+        document.getElementById('generate').addEventListener('click', generateWord);
+
+        document.getElementById('result').addEventListener('click', function() {
+            const word = this.textContent;
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.7;
+            window.speechSynthesis.speak(utterance);
+        });
+    </script>
+</body>
+</html>
