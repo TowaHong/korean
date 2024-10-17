@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
             text-align: center;
         }
         h1 {
@@ -46,8 +46,9 @@
             padding: 20px;
             display: none;
             background-color: orange;
-            color: white;
+            color: black;
             border-radius: 5px;
+            font-family: 'Nanum Gothic', sans-serif; /* 대응되는 단어도 동일 폰트 */
         }
         #instruction, #result-instruction {
             font-size: 1.2em;
@@ -80,7 +81,7 @@
     <div id="instruction" style="display: none;">(👆點擊「造字」可再造字)</div>
 
     <div id="result"></div>
-    <div id="result-instruction" style="display: none;">(👆點擊韓文字母即可聽到發音)</div>
+    <div id="result-instruction" style="display: none;">(👆點擊韓文單字即可確認發音)</div>
     <div id="correction"></div> <!-- 주황색 배경으로 보이는 단어 표시 -->
 
     <div class="double-spacer"></div>
@@ -116,7 +117,6 @@
             document.getElementById('correction').textContent = `[${correctionWord}]`;
 
             document.getElementById('result').style.display = 'inline-block';
-            document.getElementById('correction').style.display = 'inline-block';
             document.getElementById('instruction').style.display = 'block';
             document.getElementById('result-instruction').style.display = 'block';
         }
@@ -129,6 +129,9 @@
             utterance.lang = 'ko-KR';
             utterance.rate = 0.7;
             window.speechSynthesis.speak(utterance);
+
+            // 단어 클릭 시 대응되는 단어 표시
+            document.getElementById('correction').style.display = 'inline-block';
         });
     </script>
 </body>
