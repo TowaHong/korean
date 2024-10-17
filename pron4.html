@@ -48,7 +48,7 @@
             background-color: orange;
             color: black;
             border-radius: 5px;
-            font-weight: bold; /* 대응되는 단어에 bold 추가 */
+            font-weight: bold;
             font-family: 'Nanum Gothic', sans-serif;
         }
         #instruction, #result-instruction {
@@ -78,9 +78,6 @@
 
     <div class="spacer"></div>
 
-    <!-- 로고 이미지: 한칸 위로 올림 -->
-    <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
-
     <button id="generate">造字</button>
     <div id="instruction" style="display: none;">(👆點擊「造字」可再造字)</div>
 
@@ -89,6 +86,9 @@
     <div id="correction"></div> <!-- 주황색 배경으로 보이는 단어 표시 -->
 
     <div class="double-spacer"></div>
+
+    <!-- 로고 이미지를 원래 위치로 복귀 -->
+    <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
 
     <script>
         const words = [
