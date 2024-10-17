@@ -48,7 +48,8 @@
             background-color: orange;
             color: black;
             border-radius: 5px;
-            font-family: 'Nanum Gothic', sans-serif; /* 대응되는 단어도 동일 폰트 */
+            font-weight: bold; /* 대응되는 단어에 bold 추가 */
+            font-family: 'Nanum Gothic', sans-serif;
         }
         #instruction, #result-instruction {
             font-size: 1.2em;
@@ -77,6 +78,9 @@
 
     <div class="spacer"></div>
 
+    <!-- 로고 이미지: 한칸 위로 올림 -->
+    <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
+
     <button id="generate">造字</button>
     <div id="instruction" style="display: none;">(👆點擊「造字」可再造字)</div>
 
@@ -85,9 +89,6 @@
     <div id="correction"></div> <!-- 주황색 배경으로 보이는 단어 표시 -->
 
     <div class="double-spacer"></div>
-
-    <!-- 로고 이미지 -->
-    <img src="https://towahong.github.io/korean/towalogo.jpg" alt="東禾韓語中心 로고" class="logo">
 
     <script>
         const words = [
@@ -114,9 +115,9 @@
             const correctionWord = corrections[index];
 
             document.getElementById('result').textContent = randomWord;
-            document.getElementById('correction').textContent = `[${correctionWord}]`;
-
+            document.getElementById('correction').textContent = ''; // 대응되는 단어 초기화
             document.getElementById('result').style.display = 'inline-block';
+            document.getElementById('correction').style.display = 'none'; // 대응되는 단어 숨기기
             document.getElementById('instruction').style.display = 'block';
             document.getElementById('result-instruction').style.display = 'block';
         }
@@ -125,12 +126,16 @@
 
         document.getElementById('result').addEventListener('click', function() {
             const word = this.textContent;
+            const index = words.indexOf(word);
+            const correctionWord = corrections[index];
+
             const utterance = new SpeechSynthesisUtterance(word);
             utterance.lang = 'ko-KR';
             utterance.rate = 0.7;
             window.speechSynthesis.speak(utterance);
 
             // 단어 클릭 시 대응되는 단어 표시
+            document.getElementById('correction').textContent = `[${correctionWord}]`;
             document.getElementById('correction').style.display = 'inline-block';
         });
     </script>
