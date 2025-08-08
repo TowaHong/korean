@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>‘ㄹ’ 탈락 연습</title>
+
+  <!-- 나눔고딕 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --green:#2e7d32;
+      --yellow:#ffeb3b;
+      --text:#111;
+      --muted:#666;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:'Nanum Gothic', Arial, sans-serif;
+      margin:0; padding:24px;
+      text-align:center; color:var(--text);
+    }
+    h1{ margin:0 0 16px; font-weight:800; }
+    .row{ margin:12px 0; }
+    .btn{
+      display:inline-block;
+      font-size:1.8rem; font-weight:700;
+      background:var(--green); color:#fff;
+      border:none; border-radius:10px;
+      padding:16px 28px; cursor:pointer;
+      margin:6px 8px;
+    }
+    .pill{
+      display:inline-block; min-width:180px;
+      padding:10px 16px; border-radius:999px;
+      border:1px solid #ddd; margin-top:10px;
+      font-size:1.2rem; background:#fafafa;
+    }
+    #answer{
+      display:none;
+      margin:22px auto 8px;
+      max-width:90vw;
+      font-size:2.2rem; font-weight:800;
+      background:var(--yellow); color:#000;
+      border-radius:12px; padding:18px 22px;
+      width:auto; white-space:nowrap;
+    }
+    .hint{ color:var(--muted); font-size:.95rem; margin-top:6px; }
+  </style>
+</head>
+<body>
+  <h1>[‘ㄹ’ 탈락 연습]</h1>
+
+  <!-- 버튼들 -->
+  <div class="row">
+    <button id="btnVerb" class="btn">動詞</button>
+    <button id="btnGrammar" class="btn">文法</button>
+    <button id="btnAnswer" class="btn">解答</button>
+  </div>
+
+  <!-- 현재 선택 표시 -->
+  <div class="row">
+    <div id="chosenVerb" class="pill">動詞: (未選擇)</div>
+  </div>
+  <div class="row">
+    <div id="chosenGrammar" class="pill">文法: (未選擇)</div>
+  </div>
+
+  <!-- 정답 표시 -->
+  <div id="answer"></div>
+  <div class="hint">請先選擇動詞與文法，然後按下「解答」。</div>
+
+  <script>
+    // 데이터
+    const verbs = ['알다','만들다','살다','놀다','팔다','열다'];
+    const grammars = ['-아/어요','-(스)ㅂ니다','-았/었어요','-(으)세요','-(으)려고 해요','-네요'];
+
+    // 정답 매핑
+    const answerMap = {
+      '알다': {
+        '-아/어요':'알아요','-(스)ㅂ니다':'압니다','-았/었어요':'알았어요',
+        '-(으)세요':'아세요','-(으)려고 해요':'알려고 해요','-네요':'아네요'
+      },
+      '만들다': {
+        '-아/어요':'만들어요','-(스)ㅂ니다':'만듭니다','-았/었어요':'만들었어요',
+        '-(으)세요':'만드세요','-(으)려고 해요':'만들려고 해요','-네요':'만드네요'
+      },
+      '살다': {
+        '-아/어요':'살아요','-(스)ㅂ니다':'삽니다','-았/었어요':'살았어요',
+        '-(으)세요':'사세요','-(으)려고 해요':'살려고 해요','-네요':'사네요'
+      },
+      '놀다': {
+        '-아/어요':'놀아요','-(스)ㅂ니다':'놉니다','-았/었어요':'놀았어요',
+        '-(으)세요':'노세요','-(으)려고 해요':'놀려고 해요','-네요':'노네요'
+      },
+      '팔다': {
+        '-아/어요':'팔아요','-(스)ㅂ니다':'팝니다','-았/었어요':'팔았어요',
+        '-(으)세요':'파세요','-(으)려고 해요':'팔려고 해요','-네요':'파네요'
+      },
+      '열다': {
+        '-아/어요':'열어요','-(스)ㅂ니다':'엽니다','-았/었어요':'열었어요',
+        '-(으)세요':'여세요','-(으)려고 해요':'열려고 해요','-네요':'여네요'
+      }
+    };
+
+    // 상태
+    let currentVerb = null;
+    let currentGrammar = null;
+
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+    // DOM
+    const chosenVerbEl = document.getElementById('chosenVerb');
+    const chosenGrammarEl = document.getElementById('chosenGrammar');
+    const answerEl = document.getElementById('answer');
+
+    // 動詞 버튼: 새 동사 제시 + 초기화
+    document.getElementById('btnVerb').addEventListener('click', () => {
+      currentVerb = pick(verbs);
+      chosenVerbEl.textContent = `動詞: ${currentVerb}`;
+
+      // 초기화
+      currentGrammar = null;
+      chosenGrammarEl.textContent = '文法: (未選擇)';
+      answerEl.style.display = 'none';
+      answerEl.textContent = '';
+    });
+
+    // 文法 버튼: 문법 랜덤 제시
+    document.getElementById('btnGrammar').addEventListener('click', () => {
+      currentGrammar = pick(grammars);
+      chosenGrammarEl.textContent = `文法: ${currentGrammar}`;
+      answerEl.style.display = 'none';
+      answerEl.textContent = '';
+    });
+
+    // 解答 버튼: 정답 출력
+    document.getElementById('btnAnswer').addEventListener('click', () => {
+      if(!currentVerb || !currentGrammar){
+        answerEl.textContent = '請先選擇「動詞」與「文法」，然後按下「解答」。';
+        answerEl.style.display = 'inline-block';
+        return;
+      }
+      const result = answerMap[currentVerb]?.[currentGrammar];
+      answerEl.textContent = result ?? '請先選擇「動詞」與「文法」，然後按下「解答」。';
+      answerEl.style.display = 'inline-block';
+    });
+  </script>
+</body>
+</html>
