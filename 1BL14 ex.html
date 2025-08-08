@@ -81,7 +81,7 @@
 
   <!-- 정답 표시 -->
   <div id="answer"></div>
-  <div class="hint">請先選擇動詞與文法，然後按下「解答」。</div>
+  <div class="hint">請先選擇「動詞」與「文法」，然後按下「解答」。</div>
 
   <script>
     // 데이터
@@ -150,12 +150,12 @@
     // 解答 버튼: 정답 출력
     document.getElementById('btnAnswer').addEventListener('click', () => {
       if(!currentVerb || !currentGrammar){
-        answerEl.textContent = '請先選擇動詞與文法，然後按下「解答」。';
+        answerEl.textContent = '請先選擇「動詞」與「文法」，然後按下「解答」。';
         answerEl.style.display = 'inline-block';
         return;
       }
       const result = answerMap[currentVerb]?.[currentGrammar];
-      answerEl.textContent = result ?? '請先選擇動詞與文法，然後按下「解答」。';
+      answerEl.textContent = result ?? '請先選擇「動詞」與「文法」，然後按下「解答」。';
       answerEl.style.display = 'inline-block'; // 텍스트 길이에 맞춤
     });
   </script>
