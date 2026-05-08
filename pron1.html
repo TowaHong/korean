@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif; /* 기본 폰트로 변경 */
@@ -88,6 +87,25 @@
             '소나무', '사요', '아니요', '아이고', '어느'
         ];
 
+        let koreanVoice = null;
+
+        function loadVoices() {
+            if (!('speechSynthesis' in window)) return;
+
+            const voices = window.speechSynthesis.getVoices();
+
+            koreanVoice =
+                voices.find(v => v.lang === 'ko-KR') ||
+                voices.find(v => v.lang && v.lang.startsWith('ko')) ||
+                voices.find(v => v.name && v.name.toLowerCase().includes('korean')) ||
+                null;
+        }
+
+        if ('speechSynthesis' in window) {
+            loadVoices();
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
         function generateWord() {
             const randomWord = words[Math.floor(Math.random() * words.length)];
             document.getElementById('result').textContent = randomWord;
@@ -96,29 +114,35 @@
             document.getElementById('result-instruction').style.display = 'block';
         }
 
-        document.getElementById('generate').addEventListener('click', generateWord);
+        function speakWord(word) {
+            if (!('speechSynthesis' in window)) {
+                alert('이 브라우저는 TTS를 지원하지 않습니다.');
+                return;
+            }
 
-        let currentAudio = null;
+            window.speechSynthesis.cancel();
+            loadVoices();
+
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.7; // 발음 속도 조절
+            utterance.pitch = 1;
+            utterance.volume = 1;
+
+            if (koreanVoice) {
+                utterance.voice = koreanVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        document.getElementById('generate').addEventListener('click', generateWord);
 
         document.getElementById('result').addEventListener('click', function() {
             const word = this.textContent;
-            if (!word) return;
-
-            // 이전 소리가 재생 중이면 멈춤
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
+            if (word) {
+                speakWord(word);
             }
-
-            // Google Translate TTS 사용
-            const ttsUrl = 'https://translate.google.com/translate_tts?ie=UTF-8&q='
-                + encodeURIComponent(word)
-                + '&tl=ko&client=tw-ob';
-
-            currentAudio = new Audio(ttsUrl);
-            currentAudio.play().catch(function(error) {
-                console.log('TTS 재생 실패:', error);
-            });
         });
     </script>
 </body>
