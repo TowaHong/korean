@@ -98,12 +98,27 @@
 
         document.getElementById('generate').addEventListener('click', generateWord);
 
+        let currentAudio = null;
+
         document.getElementById('result').addEventListener('click', function() {
             const word = this.textContent;
-            const utterance = new SpeechSynthesisUtterance(word);
-            utterance.lang = 'ko-KR';
-            utterance.rate = 0.7; // 발음 속도 조절
-            window.speechSynthesis.speak(utterance);
+            if (!word) return;
+
+            // 이전 소리가 재생 중이면 멈춤
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            // Google Translate TTS 사용
+            const ttsUrl = 'https://translate.google.com/translate_tts?ie=UTF-8&q='
+                + encodeURIComponent(word)
+                + '&tl=ko&client=tw-ob';
+
+            currentAudio = new Audio(ttsUrl);
+            currentAudio.play().catch(function(error) {
+                console.log('TTS 재생 실패:', error);
+            });
         });
     </script>
 </body>
